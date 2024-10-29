@@ -79,6 +79,10 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
             if (isset($_GET["pages"])) {
                 if ($_GET["pages"] == "user") {
                     include "./app/views/pages/" . $_GET["pages"] . ".php";
+                } 
+                
+                elseif ($_GET["pages"] == "rol") {
+                    include "./app/views/pages/" . $_GET["pages"] . ".php";
                 }
 
                 if ($_GET["pages"] == "exit") {
@@ -87,6 +91,7 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
             }
             ?>
         </div>
+
 
         <!-- /.content-wrapper -->
 

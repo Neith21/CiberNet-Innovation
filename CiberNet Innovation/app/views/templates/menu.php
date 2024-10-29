@@ -29,7 +29,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="user"><i class="fa fa-table"></i> Usuarios</a></li>
-                    <li><a href="rol"><i class="fa fa-table"></i> Roles</a></li>
+                    <li><a href="rol"><i class="fa fa-table"></i> Roles</a></li>                    
                 </ul>
             </li>
             <li class="header">DOCUMENTACIÓN</li>
