@@ -6,8 +6,6 @@ $id = isset($_GET['id']) ? $_GET['id'] : '';
 
 $controller = new UserController();
 
-ob_start();
-
 switch ($action) {
     case 'create':
         $controller->create();

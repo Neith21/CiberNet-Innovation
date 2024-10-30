@@ -77,16 +77,14 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
         <div class="content-wrapper">
             <?php
             if (isset($_GET["pages"])) {
-                if ($_GET["pages"] == "user") {
-                    include "./app/views/pages/" . $_GET["pages"] . ".php";
-                } 
-                
-                elseif ($_GET["pages"] == "rol") {
+                if ($_GET["pages"] == "inventory" || $_GET["pages"] == "sale") {
                     include "./app/views/pages/" . $_GET["pages"] . ".php";
                 }
-                
-                elseif ($_GET["pages"] == "inventory") {
-                    include "./app/views/pages/" . $_GET["pages"] . ".php";
+
+                if ($_GET["pages"] == "user" || $_GET["pages"] == "rol") {
+                   if ($_SESSION["RolID"] == 1) {
+                        include "./app/views/pages/" . $_GET["pages"] . ".php";
+                   }
                 }
 
                 if ($_GET["pages"] == "exit") {

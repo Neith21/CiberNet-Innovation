@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: localhost    Database: cibernetinnovationdb
+-- Host: localhost    Database: cibernetinnovationdb2
 -- ------------------------------------------------------
 -- Server version	8.0.39
 
@@ -27,7 +27,7 @@ CREATE TABLE `category` (
   `categoryName` varchar(100) NOT NULL,
   `categoryInfo` text,
   PRIMARY KEY (`CategoryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +36,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Prendas','Cosos de vestir');
+INSERT INTO `category` VALUES (1,'Electrónica','Dispositivos electrónicos de consumo'),(2,'Muebles','Muebles para el hogar y la oficina'),(3,'Juguetes','Juguetes para todas las edades'),(4,'Ropa','Prendas de vestir para todas las edades'),(5,'Alimentos','Productos comestibles y bebidas');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +59,7 @@ CREATE TABLE `inventory` (
   KEY `ProductID` (`ProductID`),
   CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
   CONSTRAINT `inventory_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,20,'Entrada','2024-10-30 03:50:39',1,1);
+INSERT INTO `inventory` VALUES (1,17,'Entrada','2024-10-30 03:50:39',1,1),(4,100,'Entrada','2024-10-30 18:15:18',2,2),(5,73,'Entrada','2024-10-30 18:15:18',1,3),(6,30,'Entrada','2024-10-30 18:15:18',2,4),(7,200,'Entrada','2024-10-30 18:15:18',2,5),(8,10,'Salida','2024-10-30 18:15:18',1,1),(9,15,'Salida','2024-10-30 18:15:18',2,2),(10,20,'Salida','2024-10-30 18:15:18',2,3),(11,5,'Salida','2024-10-30 18:15:18',1,4),(12,50,'Salida','2024-10-30 18:15:18',1,5),(13,98,'Entrada','2024-10-30 18:31:52',2,2),(14,1,'Salida','2024-10-30 19:10:56',2,1),(15,2,'Salida','2024-10-30 19:12:23',2,2),(16,2,'Salida','2024-10-30 19:32:41',1,3),(17,1,'Salida','2024-10-30 19:36:08',1,1),(18,1,'Salida','2024-10-30 19:36:08',1,1);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `product` (
   KEY `SupplierID` (`SupplierID`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`),
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`SupplierID`) REFERENCES `supplier` (`SupplierID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Camisita','Paulita mi amor',49.99,'Camisa individual',1,1);
+INSERT INTO `product` VALUES (1,'Smartphone X','Smartphone de última generación',699.99,'Caja',1,1),(2,'Mesa de Centro','Mesa de centro de madera',150.00,'Caja',2,2),(3,'Pelota de Fútbol','Pelota tamaño profesional',20.50,'Bolsa',3,3),(4,'Camiseta Casual','Camiseta 100% algodón',15.00,'Individual',4,4),(5,'Lata de Refresco','Refresco de cola 350ml',1.25,'Lata',5,5),(6,'Tablet Pro','Tablet con pantalla de alta definición',399.00,'Caja',1,1),(7,'Silla Oficina','Silla ergonómica con respaldo ajustable',85.00,'Caja',2,2),(8,'Rompecabezas 1000 piezas','Rompecabezas de 1000 piezas',10.00,'Caja',3,3),(9,'Pantalón Jeans','Jeans de mezclilla',30.00,'Individual',4,4),(10,'Jugo Natural','Jugo de frutas natural 500ml',2.50,'Botella',5,5);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +146,7 @@ CREATE TABLE `sale` (
   PRIMARY KEY (`SaleID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `sale_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,6 +155,7 @@ CREATE TABLE `sale` (
 
 LOCK TABLES `sale` WRITE;
 /*!40000 ALTER TABLE `sale` DISABLE KEYS */;
+INSERT INTO `sale` VALUES (1,'2024-10-30 18:54:58','Ariel',1549.98,1),(2,'2024-10-30 18:55:27','',699.99,1),(3,'2024-10-30 18:56:21','',30.00,2),(4,'2024-10-30 19:10:56','Juana',699.99,2),(5,'2024-10-30 19:12:23','',300.00,2),(6,'2024-10-30 19:32:41','11',41.00,1),(7,'2024-10-30 19:36:08','awas',1399.98,1);
 /*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -177,7 +178,7 @@ CREATE TABLE `saledetail` (
   KEY `ProductID` (`ProductID`),
   CONSTRAINT `saledetail_ibfk_1` FOREIGN KEY (`SaleID`) REFERENCES `sale` (`SaleID`),
   CONSTRAINT `saledetail_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,8 +187,53 @@ CREATE TABLE `saledetail` (
 
 LOCK TABLES `saledetail` WRITE;
 /*!40000 ALTER TABLE `saledetail` DISABLE KEYS */;
+INSERT INTO `saledetail` (`SaleDetailID`, `saleDetailQty`, `unitPrice`, `SaleID`, `ProductID`) VALUES (1,1,150.00,1,2),(2,2,699.99,1,1),(3,1,699.99,2,1),(4,2,15.00,3,4),(5,1,699.99,4,1),(6,2,150.00,5,2),(7,2,20.50,6,3),(8,1,699.99,7,1),(9,1,699.99,7,1);
 /*!40000 ALTER TABLE `saledetail` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `after_insert_sale_detail` AFTER INSERT ON `saledetail` FOR EACH ROW BEGIN
+    DECLARE currentQty INT;
+    
+    -- Insertar un nuevo registro en Inventory de tipo "Salida" con la cantidad de saleDetailQty
+    INSERT INTO Inventory (inventoryQty, typeMovement, UserID, ProductID)
+    VALUES (NEW.saleDetailQty, 'Salida', (SELECT UserID FROM Sale WHERE SaleID = NEW.SaleID), NEW.ProductID);
+
+    -- Obtener la cantidad actual del inventario para el ProductID y el unitPrice específicos
+    SELECT inventoryQty INTO currentQty
+    FROM Inventory
+    WHERE ProductID = NEW.ProductID
+      AND typeMovement = 'Entrada'
+      AND EXISTS (SELECT 1 FROM SaleDetail WHERE ProductID = Inventory.ProductID AND unitPrice = NEW.unitPrice)
+    ORDER BY inventoryDate DESC
+    LIMIT 1;
+
+    -- Actualizar la entrada existente en Inventory restando la cantidad vendida, considerando también el unitPrice
+    IF currentQty >= NEW.saleDetailQty THEN
+        UPDATE Inventory
+        SET inventoryQty = inventoryQty - NEW.saleDetailQty
+        WHERE ProductID = NEW.ProductID
+          AND typeMovement = 'Entrada'
+          AND EXISTS (SELECT 1 FROM SaleDetail WHERE ProductID = Inventory.ProductID AND unitPrice = NEW.unitPrice)
+        ORDER BY inventoryDate DESC
+        LIMIT 1;
+    ELSE
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Cantidad insuficiente en el inventario para el producto seleccionado';
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `supplier`
@@ -202,7 +248,7 @@ CREATE TABLE `supplier` (
   `supplierPhone` varchar(20) DEFAULT NULL,
   `supplierAddress` text,
   PRIMARY KEY (`SupplierID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +257,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (1,'Pacco Rabanne','36400000','col el pancracio');
+INSERT INTO `supplier` VALUES (1,'Electro Distribuciones','555-1234','Calle Electron 123, Ciudad Central'),(2,'Muebles S.A.','555-5678','Avenida de los Muebles 456, Ciudad Norte'),(3,'Juguetelandia','555-8765','Boulevard de los Niños 789, Ciudad Sur'),(4,'Moda Fashion','555-4321','Paseo de la Moda 101, Ciudad Este'),(5,'Alimentos Frescos','555-6789','Calle de la Comida 202, Ciudad Oeste');
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,11 +296,11 @@ INSERT INTO `user` VALUES (1,'Juan Pérez','Masculino','admin','juan.perez@examp
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'cibernetinnovationdb'
+-- Dumping events for database 'cibernetinnovationdb2'
 --
 
 --
--- Dumping routines for database 'cibernetinnovationdb'
+-- Dumping routines for database 'cibernetinnovationdb2'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `sp_CreateInventory` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -297,6 +343,55 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_CreateRol`(
 )
 BEGIN
     INSERT INTO rol (rolName, rolInfo) VALUES (rName, rInfo);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_CreateSale` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_CreateSale`(
+	IN cName VARCHAR(100),
+    IN sTotal DECIMAL(10,2), 
+    IN uID INT
+)
+BEGIN
+    INSERT INTO Sale (saleDate, customerName, saleTotal, UserID)
+    VALUES (NOW(), cName, sTotal, uID);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_CreateSaleDetil` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_CreateSaleDetil`(
+	IN sQty int,
+	IN uPrice decimal(10,2),
+	IN sID int,
+	IN pID int
+)
+BEGIN
+    INSERT INTO SaleDetail (saleDetailQty, unitPrice, SaleID, ProductID)
+    VALUES (sQty, uPrice, sID, pID);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -445,6 +540,25 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectProducts4Sale` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectProducts4Sale`()
+BEGIN
+	SELECT p.ProductID, p.productName, p.productPrice, i.inventoryQty AS stock FROM Product p INNER JOIN Inventory i ON p.ProductID = i.ProductID WHERE i.typeMovement = 'Entrada' AND i.inventoryQty > 0;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_SelectRol` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -479,6 +593,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectRolByID`(
 )
 BEGIN
     SELECT * FROM rol WHERE RolID = rID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectSaleID` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectSaleID`()
+BEGIN
+	SELECT MAX(SaleID) AS SaleID FROM Sale;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -616,4 +749,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-29 22:19:39
+-- Dump completed on 2024-10-30 13:38:47

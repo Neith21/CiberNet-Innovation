@@ -28,15 +28,26 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="user"><i class="fa fa-table"></i> Usuarios</a></li>
-                    <li><a href="rol"><i class="fa fa-table"></i> Roles</a></li>     
-                    <li><a href="inventory"><i class="fa fa-table"></i> Inventario</a></li>                   
+                    <?php if ($_SESSION["RolID"] == 1): ?>
+                        <li>
+                            <a href="<?php echo $_SESSION["RolID"] != 1 ? '404' : 'user'; ?>">
+                                <i class="fa fa-table"></i> Usuarios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $_SESSION["RolID"] != 1 ? '404' : 'rol'; ?>">
+                                <i class="fa fa-table"></i> Roles
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <li><a href="inventory"><i class="fa fa-table"></i> Inventario</a></li>
+                    <li><a href="sale"><i class="fa fa-table"></i> Generar venta</a></li>
                 </ul>
             </li>
             <li class="header">DOCUMENTACIÓN</li>
             <li class="treeview">
                 <a href="#">
-                <i class="fa fa-book"></i> <span>Generación Reportes</span>
+                    <i class="fa fa-book"></i> <span>Generación Reportes</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
