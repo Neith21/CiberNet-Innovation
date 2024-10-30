@@ -84,6 +84,10 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
                 elseif ($_GET["pages"] == "rol") {
                     include "./app/views/pages/" . $_GET["pages"] . ".php";
                 }
+                
+                elseif ($_GET["pages"] == "inventory") {
+                    include "./app/views/pages/" . $_GET["pages"] . ".php";
+                }
 
                 if ($_GET["pages"] == "exit") {
                     include "./core/" . $_GET["pages"] . ".php";
