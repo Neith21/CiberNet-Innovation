@@ -23,8 +23,8 @@ class SaleController
     {
         $productsResult = $this->sale->getProducts();
         $products = $productsResult->fetchAll(PDO::FETCH_ASSOC);
-
-        include(dirname(__FILE__) . '/../views/sale/saleGenerate.php');
+        
+        return $products;
     }
 
     public function create() {

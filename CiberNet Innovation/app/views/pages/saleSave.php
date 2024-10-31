@@ -1,49 +1,57 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
+    header("Location: ../../../index.php");
+    exit();
+}
+
+
 require_once(dirname(__FILE__) . "/../../../config/config.php");
 require_once(dirname(__FILE__) . "/../../../core/database.php");
 require_once(dirname(__FILE__) . "/../../models/SaleModel.php");
 require_once(dirname(__FILE__) . "/../../models/SaleDetailModel.php");
 
-header("Content-Type: application/json");
-
+$database = new Database();
 $db = $database->getConnection();
 $sale = new SaleModel($db);
 $saleDetail = new SaleDetailModel($db);
 
-$data = json_decode(file_get_contents("php://input"), true);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recibe los datos
+    $customerName = $_POST['customerName'];
+    $saleTotal = $_POST['total']; // Ahora debería tener un valor válido
+    $UserID = $_SESSION["UserID"];
 
-if (!$data) {
-    echo json_encode(['success' => false, 'message' => 'Datos no válidos']);
-    exit;
-}
-
-try {
-    // Guardar la venta
-    $sale->customerName = $data['customerName'];
-    $sale->saleTotal = $data['saleTotal'];
-    $sale->UserID = $_SESSION["UserID"];
-    
-    if ($sale->create()) {
-        $SaleID = $sale->getSaleID();
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Error al crear la venta.']);
-        exit;
+    // Asegúrate de que $saleTotal sea un número decimal válido
+    if (empty($saleTotal) || !is_numeric($saleTotal)) {
+        // Manejo de error: puedes redirigir o mostrar un mensaje
+        die("Error: El total de la venta no es válido.");
     }
 
-    // Guardar los detalles de la venta
-    foreach ($data['saleDetails'] as $detail) {
+    // Crea la venta
+    $sale->customerName = $customerName;
+    $sale->saleTotal = (float) $saleTotal; // Convierte a float
+    $sale->UserID = $UserID;
+
+    $sale->create();
+    $SaleID = $sale->getSaleID();
+
+    // Procesa los detalles de venta
+    $saleDetails = json_decode($_POST['saleDetails'], true); // Decodifica el JSON recibido
+    foreach ($saleDetails as $detail) {
         $saleDetail->ProductID = $detail['productId'];
-        $saleDetail->saleDetailQty = $detail['qty'];
-        $saleDetail->unitPrice = $detail['unitPrice'];
+        $saleDetail->saleDetailQty = $detail['productQty'];
+        $saleDetail->unitPrice = $detail['productPrice'];
         $saleDetail->SaleID = $SaleID;
 
-        if (!$saleDetail->Create()) {
-            throw new Exception('Error al crear el detalle de la venta.');
-        }
+        $saleDetail->Create();
     }
 
-    echo json_encode(['success' => true]);
-} catch (Exception $e) {
-    echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    // Redirigir o mostrar un mensaje de éxito
+    header("Location: sale.php");
+        exit();
 }
+
 ?>
