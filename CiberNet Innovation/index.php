@@ -81,7 +81,7 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
                     include "./app/views/pages/" . $_GET["pages"] . ".php";
                 }
 
-                if ($_GET["pages"] == "user" || $_GET["pages"] == "rol") {
+                if ($_GET["pages"] == "user" || $_GET["pages"] == "rol" || $_GET["pages"] == "product") {
                    if ($_SESSION["RolID"] == 1) {
                         include "./app/views/pages/" . $_GET["pages"] . ".php";
                    }

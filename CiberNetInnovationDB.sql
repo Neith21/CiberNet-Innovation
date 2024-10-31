@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
--- Host: localhost    Database: cibernetinnovationdb2
+-- Host: localhost    Database: cibernetinnovationdb
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.0.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -92,7 +92,7 @@ CREATE TABLE `product` (
   KEY `SupplierID` (`SupplierID`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`CategoryID`),
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`SupplierID`) REFERENCES `supplier` (`SupplierID`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'Smartphone X','Smartphone de última generación',699.99,'Caja',1,1),(2,'Mesa de Centro','Mesa de centro de madera',150.00,'Caja',2,2),(3,'Pelota de Fútbol','Pelota tamaño profesional',20.50,'Bolsa',3,3),(4,'Camiseta Casual','Camiseta 100% algodón',15.00,'Individual',4,4),(5,'Lata de Refresco','Refresco de cola 350ml',1.25,'Lata',5,5),(6,'Tablet Pro','Tablet con pantalla de alta definición',399.00,'Caja',1,1),(7,'Silla Oficina','Silla ergonómica con respaldo ajustable',85.00,'Caja',2,2),(8,'Rompecabezas 1000 piezas','Rompecabezas de 1000 piezas',10.00,'Caja',3,3),(9,'Pantalón Jeans','Jeans de mezclilla',30.00,'Individual',4,4),(10,'Jugo Natural','Jugo de frutas natural 500ml',2.50,'Botella',5,5);
+INSERT INTO `product` VALUES (1,'Smartphone X','Smartphone de última generación',699.99,'Caja',1,1),(2,'Mesa de Centro','Mesa de centro de madera',150.00,'Caja',2,2),(3,'Pelota de Fútbol','Pelota tamaño profesional',20.50,'Bolsa',3,3),(4,'Camiseta Casual','Camiseta 100% algodón',15.00,'Individual',4,4),(5,'Lata de Refresco','Refresco de cola 350ml',1.25,'Lata',5,5),(6,'Tablet Pro','Tablet con pantalla de alta definición',399.00,'Caja',1,1),(7,'Silla Oficina','Silla ergonómica con respaldo ajustable',85.00,'Caja',2,2),(8,'Rompecabezas 1000 piezas','Rompecabezas de 1000 piezas',10.00,'Caja',3,3),(9,'Pantalón Jeans','Jeans de mezclilla',30.00,'Individual',4,4),(10,'Jugo Natural','Jugo de frutas natural 500ml',2.50,'Botella',5,5),(12,'Xiaomi Poco X5 Pro 5g','Xiaomi Poco X5 Pro 5g',420.00,'edicion limitada',1,1),(13,'Teclado Mecanico','Un teclado no mms que mas descripcion queres',45.00,'paquete',1,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,11 +296,11 @@ INSERT INTO `user` VALUES (1,'Juan Pérez','Masculino','admin','juan.perez@examp
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'cibernetinnovationdb2'
+-- Dumping events for database 'cibernetinnovationdb'
 --
 
 --
--- Dumping routines for database 'cibernetinnovationdb2'
+-- Dumping routines for database 'cibernetinnovationdb'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `sp_CreateInventory` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -321,6 +321,33 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_CreateInventory`(
 BEGIN
     INSERT INTO inventory (inventoryQty, typeMovement, UserID, ProductID)
     VALUES (iQty, iTypeMovement, UID, PID);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_CreateProduct` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_CreateProduct`(
+	IN pName VARCHAR(50),
+    IN pInfo TEXT,
+    IN pPrice decimal(10,2),
+    IN pPresentation varchar(100),
+    IN pCategoryID INT,
+    in pSupplierID INT
+)
+BEGIN
+	INSERT INTO product 
+    VALUES (null, pName, pInfo, pPrice, pPresentation, pCategoryID, pSupplierID);
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -447,6 +474,27 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_DeleteProduct` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeleteProduct`(
+	in pID INT
+)
+BEGIN
+	DELETE FROM product WHERE ProductID = pID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_DeleteRol` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -534,6 +582,69 @@ BEGIN
     INNER JOIN user u ON i.UserID = u.UserID
     INNER JOIN product p ON i.ProductID = p.ProductID
     WHERE i.InventoryID = IID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectProductById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectProductById`(
+	in pID int
+)
+BEGIN
+	SELECT pr.ProductID, 
+		pr.productName, 
+        pr.productInfo, 
+        pr.productPrice, 
+        pr.productPresentation, 
+        ca.CategoryID,
+        ca.categoryName,
+        su.SupplierID,
+        su.supplierName
+    FROM Product pr
+    INNER JOIN category ca ON pr.CategoryID = ca.CategoryID
+    INNER JOIN supplier su ON pr.SupplierID = su.SupplierID
+    WHERE pr.ProductID = pID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectProducts` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectProducts`()
+BEGIN
+	SELECT pr.ProductID, 
+		pr.productName, 
+        pr.productInfo, 
+        pr.productPrice, 
+        pr.productPresentation, 
+        ca.CategoryID,
+        ca.categoryName,
+        su.SupplierID,
+        su.supplierName
+    FROM Product pr
+    INNER JOIN category ca ON pr.CategoryID = ca.CategoryID
+    INNER JOIN supplier su ON pr.SupplierID = su.SupplierID;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -689,6 +800,40 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_UpdateProduct` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_UpdateProduct`(
+	IN pID INT,
+	IN pName VARCHAR(50),
+    IN pInfo TEXT,
+    IN pPrice decimal(10,2),
+    IN pPresentation varchar(100),
+    IN pCategoryID INT,
+    in pSupplierID INT
+)
+BEGIN
+	UPDATE product
+    SET productName = pName,
+		productInfo = pInfo,
+        productPrice = pPrice,
+        productPresentation = pPresentation,
+        CategoryID = pCategoryID,
+        SupplierID = pSupplierID
+	WHERE ProductID = pID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_UpdateRol` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -749,4 +894,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-30 13:38:47
+-- Dump completed on 2024-10-30 22:19:30

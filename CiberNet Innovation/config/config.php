@@ -3,7 +3,7 @@
 class Config
 {
     const HOST = "localhost";
-    const DATABASE = "CiberNetInnovationDB2";
+    const DATABASE = "CiberNetInnovationDB";
     const USER = "root";
-    const PASSWORD = "123123";
+    const PASSWORD = "1234";
 }

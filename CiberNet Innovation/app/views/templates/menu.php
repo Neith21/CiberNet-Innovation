@@ -42,6 +42,7 @@
                     <?php endif; ?>
                     <li><a href="inventory"><i class="fa fa-table"></i> Inventario</a></li>
                     <li><a href="sale"><i class="fa fa-table"></i> Generar venta</a></li>
+                    <li><a href="product"><i class="fa fa-table"></i> Productos </a></li>
                 </ul>
             </li>
             <li class="header">DOCUMENTACIÓN</li>
