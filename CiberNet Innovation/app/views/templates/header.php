@@ -201,6 +201,8 @@ $_SESSION["LAST_ACTIVITY"] = time();
                             <li><a href="../pages/inventory.php"><i class="fa fa-table"></i> Inventario</a></li>
                             <li><a href="../pages/sale.php"><i class="fa fa-table"></i> Generar venta</a></li>
                             <li><a href="../pages/product.php"><i class="fa fa-table"></i> Productos </a></li>
+                            <li><a href="../pages/category.php"><i class="fa fa-table"></i> Categorías </a></li>
+                            <li><a href="../pages/supplier.php"><i class="fa fa-table"></i> Proveedores </a></li>
                         </ul>
                     </li>
                     <li class="header">HERRAMIENTAS DE ANÁLISIS</li>

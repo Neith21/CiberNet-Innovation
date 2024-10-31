@@ -30,7 +30,7 @@
                             <td><?= htmlspecialchars($product['productPresentation']); ?></td>
                             <td><?= htmlspecialchars($product['categoryName']); ?></td>
                             <td><?= htmlspecialchars($product['supplierName']); ?></td>
-                            <td class="text-center">
+                            <td class="text-center" style="width: 150px;">
                                 <a href="?pages=product&action=edit&id=<?= $product['ProductID'] ?>" class="btn btn-warning btn-sm">Editar</a>
                                 <a href="?pages=product&action=delete&id=<?= $product['ProductID'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
                             </td>
