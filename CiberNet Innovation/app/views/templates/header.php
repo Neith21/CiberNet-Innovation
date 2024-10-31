@@ -174,7 +174,7 @@ $_SESSION["LAST_ACTIVITY"] = time();
                 <ul class="sidebar-menu" data-widget="tree">
                     <li>
                         <a href="../pages/index.php">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            <i class="fa fa-home"></i> <span>INICIO</span>
                         </a>
                     </li>
                     <li class="header">ADMINISTRACIÓN</li>
