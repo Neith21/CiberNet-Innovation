@@ -12,7 +12,6 @@ class Auth
     {
         $database = new Database();
         $this->db = $database->getConnection();
-
         $this->user = new UserModel($this->db);
     }
 
@@ -26,7 +25,6 @@ class Auth
             $result = $this->db->prepare($query);
             $result->bindParam(":userNickname", $userNickname);
             $result->bindParam(":userPassword", $userPassword);
-
             $result->execute();
 
             if ($result->rowCount() == 1) {
@@ -36,8 +34,8 @@ class Auth
                 $_SESSION["UserID"] = $userData['UserID'];
                 $_SESSION["userName"] = $userData['userName'];
                 $_SESSION["RolID"] = $userData['RolID'];
-
-                header("Location: ./app/views/pages/index.php");
+                $_SESSION["LAST_ACTIVITY"] = time();
+                header("Location: /CiberNet%20Innovation/index.php");
                 exit();
             } else {
                 $error = "Inicio de sesión fallido";

@@ -1,10 +1,16 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
-    header("Location: ../../../index.php");
+define('MAX_INACTIVITY', 3);
+
+if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > MAX_INACTIVITY)) {
+    session_unset();
+    session_destroy();
+    header("Location: ../../../index.php"); 
     exit();
 }
+
+$_SESSION["LAST_ACTIVITY"] = time();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +40,45 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <script>
+        const INACTIVITY_TIMEOUT = 5 * 60 * 1000; 
+        const ALERT_TIMEOUT = 4 * 60 * 1000; 
 
+        let inactivityTimer;
+        let alertTimeout;
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            clearTimeout(alertTimeout);
+
+            alertTimeout = setTimeout(() => {
+                const extendSession = confirm("Su sesión expirará en 1 minuto. ¿Desea extenderla?");
+                if (extendSession) {
+                    resetInactivityTimer();
+                    extendUserSession();
+                }
+            }, ALERT_TIMEOUT);
+
+            inactivityTimer = setTimeout(() => {
+                window.location.href = './core/exit.php';
+            }, INACTIVITY_TIMEOUT);
+        }
+        function extendUserSession() {
+            fetch('./core/extend_session.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Sesión extendida.");
+                    }
+                })
+                .catch(error => console.error("Error al extender la sesión:", error));
+        }
+
+        document.addEventListener('mousemove', resetInactivityTimer);
+        document.addEventListener('keydown', resetInactivityTimer);
+
+        resetInactivityTimer();
+    </script>
     <style>
         .password-toggle {
             cursor: pointer;
@@ -159,7 +203,7 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
                             <li><a href="../pages/product.php"><i class="fa fa-table"></i> Productos </a></li>
                         </ul>
                     </li>
-                    <li class="header">DOCUMENTACIÓN</li>
+                    <li class="header">HERRAMIENTAS DE ANÁLISIS</li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-book"></i> <span>Generación Reportes</span>
@@ -168,8 +212,7 @@ if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="../tables/simple.html"><i class="fa fa-book"></i> Simple tables</a></li>
-                            <li><a href="../tables/data.html"><i class="fa fa-book"></i> Data tables</a></li>
+                            <li><a href="../pages/chart.php"><i class="fa fa-check"></i> Comprar ventas de productos </a></li>
                         </ul>
                     </li>
                 </ul>
