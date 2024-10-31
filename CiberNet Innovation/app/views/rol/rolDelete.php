@@ -1,3 +1,5 @@
+<?php include '../templates/header.php'; ?>
+
 <div class="container mt-5">
     <div class="card p-4">
         <h2 class="mb-4">Eliminar Rol</h2>
@@ -33,3 +35,5 @@
         document.getElementById('deleteButton').disabled = !this.checked;
     });
 </script>
+
+<?php include '../templates/footer.php'; ?>

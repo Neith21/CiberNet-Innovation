@@ -33,7 +33,7 @@ class UserController
             $this->user->userPassword = $_POST['userPassword'];
             $this->user->RolID = $_POST['RolID'];
 
-            header("Location: ?pages=user");
+            header("Location: ../pages/user.php");
             return $this->user->create();
         }
         $rolesResult = $this->user->getRoles();
@@ -54,7 +54,7 @@ class UserController
             $this->user->userPassword = $_POST['userPassword'];
             $this->user->RolID = $_POST['RolID'];
 
-            header("Location: ?pages=user");
+            header("Location: ../pages/user.php");
             return $this->user->update();
         }
         $rolesResult = $this->user->getRoles();
@@ -70,9 +70,9 @@ class UserController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['confirmDelete'])) {
                 $this->user->delete();
-                header("Location: ?pages=user");
+                header("Location: ../pages/user.php");
             } else {
-                header("Location: ?pages=user");
+                header("Location: ../pages/user.php");
             }
             exit();
         }

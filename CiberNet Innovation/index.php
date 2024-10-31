@@ -1,123 +1,98 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['userName']) || $_SESSION['userName'] == "") {
-    header("Location: ./app/views/pages/login.php");
-    exit();
+if (isset($_SESSION['userName']) && !empty($_SESSION['userName'])) {
+  header("Location: ./app/views/pages/index.php");
+  exit();
 }
+
+require_once __DIR__ . '/core/auth.php';
+
+$auth = new Auth();
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $auth->authenticate();
+}
+
 ?>
 
 <!DOCTYPE html>
-<html>
+
+<html lang="es">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>CiberNet Innovation</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, ./public/l-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="./public/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="./public/bower_components/font-awesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="./public/bower_components/Ionicons/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="./public/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="./public/dist/css/skins/_all-skins.min.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-    <style>
-        .password-toggle {
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-        }
-
-        .password-toggle:hover {
-            color: #0056b3;
-        }
-
-        .input-group {
-            position: relative;
-        }
-    </style>
-
-    <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in Form</title>
+  <link rel="stylesheet" href="./public/login/login.css" />
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
-    <!-- Site wrapper -->
-    <div class="wrapper">
+<body>
+  <main>
+    <div class="box">
+      <div class="inner-box">
+        <div class="forms-wrap">
+          <form action="" method="POST" autocomplete="off" class="sign-in-form">
+            <div class="logo">
+              <img src="./public/login/img/logo.png" alt="logo" />
+              <h4>CiberNet Innovation</h4>
+            </div>
 
-        <!--HEADER-->
-        <?php
-        ob_start();
-        include './app/views/templates/header.php';
-        ?>
+            <div class="heading">
+              <h2>Bienvenido de Nuevo</h2>
+            </div>
 
-        <!-- =============================================== -->
+            <div class="actual-form">
+              <div class="input-wrap">
+                <input type="text" name="userNickname" class="input-field" autocomplete="off" required />
+                <label>Usuario</label>
+              </div>
 
-        <!--MENU-->
-        <?php include './app/views/templates/menu.php'; ?>
+              <div class="input-wrap">
+                <input type="password" name="userPassword" class="input-field" autocomplete="off" required />
+                <label>Contraseña</label>
+              </div>
 
-        <!-- =============================================== -->
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+              <input type="submit" value="Iniciar Sesión" class="sign-btn" />
+            </div>
             <?php
-            if (isset($_GET["pages"])) {
-                if ($_GET["pages"] == "inventory" || $_GET["pages"] == "sale") {
-                    include "./app/views/pages/" . $_GET["pages"] . ".php";
-                }
-
-                if ($_GET["pages"] == "user" || $_GET["pages"] == "rol" || $_GET["pages"] == "product") {
-                   if ($_SESSION["RolID"] == 1) {
-                        include "./app/views/pages/" . $_GET["pages"] . ".php";
-                   }
-                }
-
-                if ($_GET["pages"] == "exit") {
-                    include "./core/" . $_GET["pages"] . ".php";
-                }
+            if (isset($error)) {
+              echo '<p style="color:red;">' . htmlspecialchars($error) . '</p>';
             }
             ?>
+          </form>
         </div>
 
+        <div class="carousel">
+          <div class="images-wrapper">
+            <img src="./public/login/img/image1.png" class="image img-1 show" alt="" />
+            <img src="./public/login/img/image2.png" class="image img-2" alt="" />
+            <img src="./public/login//img/image3.png" class="image img-3" alt="" />
+          </div>
 
-        <!-- /.content-wrapper -->
+          <div class="text-slider">
+            <div class="text-wrap">
+              <div class="text-group">
+                <h2>Crea tus reportes</h2>
+                <h2>Personalizalo a tu manera</h2>
+                <h2>Primero eres tú</h2>
+              </div>
+            </div>
 
-        <!--FOOTER-->
-        <?php include './app/views/templates/footer.php'; ?>
+            <div class="bullets">
+              <span class="active" data-value="1"></span>
+              <span data-value="2"></span>
+              <span data-value="3"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-        <!-- jQuery 3 -->
-        <script src="./public/bower_components/jquery/dist/jquery.min.js"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="./public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <!-- SlimScroll -->
-        <script src="./public/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-        <!-- FastClick -->
-        <script src="./public/bower_components/fastclick/lib/fastclick.js"></script>
-        <!-- AdminLTE App -->
-        <script src="./public/dist/js/adminlte.min.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="./public/dist/js/demo.js"></script>
-
-        <script>
-            $(document).ready(function() {
-                $('.sidebar-menu').tree()
-            })
-        </script>
+  <script src="./public/login/login.js"></script>
 </body>
 
 </html>

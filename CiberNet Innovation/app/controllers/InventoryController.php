@@ -32,7 +32,7 @@ class InventoryController{
             $this->inventory->ProductID = $_POST['ProductID'];
             
             if ($this->inventory->create()) {
-                header("Location: ?pages=inventory");
+                header("Location: ../pages/inventory.php");
                 exit();
             } else {
                 echo "Error al crear el rol.";
@@ -57,7 +57,7 @@ class InventoryController{
             $this->inventory->ProductID = $_POST['ProductID'];
 
             if ($this->inventory->update()) {
-                header("Location: ?pages=inventory");
+                header("Location: ../pages/inventory.php");
                 exit();
             } else {
                 echo "Error al actualizar el inventario.";
@@ -78,10 +78,10 @@ class InventoryController{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['confirmDelete'])) {
                 $this->inventory->delete();
-                header("Location: ?pages=inventory");
+                header("Location: ../pages/inventory.php");
                 exit();
             } else {
-                header("Location: ?pages=inventory");
+                header("Location: ../pages/inventory.php");
                 exit();
             }
         }

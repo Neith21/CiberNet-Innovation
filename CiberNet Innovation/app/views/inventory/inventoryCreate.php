@@ -1,3 +1,5 @@
+<?php include '../templates/header.php'; ?>
+
 <div class="container mt-5">
     <div class="card p-4 shadow">
         <h2 class="mb-4 text-center">Registro de inventario</h2>
@@ -39,3 +41,5 @@
         </form>
     </div>
 </div>
+
+<?php include '../templates/footer.php'; ?>

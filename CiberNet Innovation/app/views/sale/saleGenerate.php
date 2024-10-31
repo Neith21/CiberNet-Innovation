@@ -1,3 +1,5 @@
+<?php include '../templates/header.php'; ?>
+
 <div class="container mt-4">
     <div class="row">
         <!-- Datos del Cliente -->
@@ -148,6 +150,7 @@
             return;
         }
 
+        // Recopilar los detalles de cada producto en la tabla
         tableRows.forEach(row => {
             const productId = row.cells[1].textContent;
             const qty = row.cells[4].textContent;
@@ -160,9 +163,8 @@
             });
         });
 
-        alert('Venta generada exitosamente');
-
-        fetch('?pages=sale&action=create', {
+        // Recopilar los datos de venta y hacer la solicitud al servidor
+        fetch('saleSave.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -172,9 +174,20 @@
                     saleTotal: document.getElementById('total').textContent,
                     saleDetails: saleDetails
                 })
-            }).then(clearAll(), location.reload())
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Venta generada exitosamente');
+                    clearAll(); // Limpia los campos después de la venta
+                    location.reload();
+                } else {
+                    alert(data.message || 'Error al generar la venta');
+                }
+            })
             .catch(error => console.error('Error:', error));
     }
+
 
     function loadProductData() {
         const select = document.getElementById('productSelect');
@@ -207,3 +220,5 @@
         document.getElementById("total").textContent = "0.00";
     }
 </script>
+
+<?php include '../templates/footer.php'; ?>

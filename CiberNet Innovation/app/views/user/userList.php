@@ -1,8 +1,10 @@
+<?php include '../templates/header.php'; ?>
+
 <div class="container">
     <div class="card mt-5 p-4">
         <h2 class="mb-4">Lista de usuarios</h2>
         <div class="d-flex justify-content-between mb-3">
-            <a href="?pages=user&action=create" class="btn btn-success">Crear usuario</a>
+            <a href="?action=create" class="btn btn-success">Crear usuario</a>
         </div>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
@@ -35,8 +37,8 @@
                             </td>
                             <td><?= htmlspecialchars($user['rolName']); ?></td>
                             <td class="text-center">
-                                <a href="?pages=user&action=edit&id=<?= $user['UserID'] ?>" class="btn btn-warning btn-sm">Editar</a>
-                                <a href="?pages=user&action=delete&id=<?= $user['UserID'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                                <a href="?action=edit&id=<?= $user['UserID'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="?action=delete&id=<?= $user['UserID'] ?>" class="btn btn-danger btn-sm">Eliminar</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -67,3 +69,5 @@
         return str;
     }
 </script>
+
+<?php include '../templates/footer.php'; ?>

@@ -30,7 +30,7 @@ class RolController
             $this->rol->rolInfo = $_POST['rolInfo'];
 
             if ($this->rol->create()) {
-                header("Location: ?pages=rol");
+                header("Location: ../pages/rol.php");
                 exit();
             } else {
                 echo "Error al crear el rol.";
@@ -49,7 +49,7 @@ class RolController
             $this->rol->rolInfo = $_POST['rolInfo'];
 
             if ($this->rol->update()) {
-                header("Location: ?pages=rol");
+                header("Location: ../pages/rol.php");
                 exit();
             } else {
                 echo "Error al actualizar el rol.";
@@ -67,10 +67,10 @@ class RolController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['confirmDelete'])) {
                 $this->rol->delete();
-                header("Location: ?pages=rol");
+                header("Location: ../pages/rol.php");
                 exit();
             } else {
-                header("Location: ?pages=rol");
+                header("Location: ../pages/rol.php");
                 exit();
             }
         }

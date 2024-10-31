@@ -35,7 +35,7 @@ class ProductController{
 
             
             if ($this->product->create()) {
-                header("Location: ?pages=product");
+                header("Location: ../pages/product.php");
                 exit();
             } else {
                 echo "Error al crear el rol.";
@@ -63,7 +63,7 @@ class ProductController{
             $this->product->SupplierID = $_POST['SupplierID'];
 
             if ($this->product->update()) {
-                header("Location: ?pages=product");
+                header("Location: ../pages/product.php");
                 exit();
             } else {
                 echo "Error al actualizar el inventario.";
@@ -85,10 +85,10 @@ class ProductController{
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['confirmDelete'])) {
                 $this->product->delete();
-                header("Location: ?pages=product");
+                header("Location: ../pages/product.php");
                 exit();
             } else {
-                header("Location: ?pages=product");
+                header("Location: ../pages/product.php");
                 exit();
             }
         }

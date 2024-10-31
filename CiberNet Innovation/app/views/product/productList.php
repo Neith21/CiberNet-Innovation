@@ -1,3 +1,5 @@
+<?php include '../templates/header.php'; ?>
+
 <div class="container">
     <div class="card mt-5 p-4">
         <h2 class="mb-4">Productos</h2>
@@ -39,3 +41,5 @@
         </div>
     </div>
 </div>
+
+<?php include '../templates/footer.php'; ?>

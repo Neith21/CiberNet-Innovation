@@ -1,3 +1,5 @@
+<?php include '../templates/header.php'; ?>
+
 <div class="container mt-5">
     <div class="card p-4 shadow-lg">
         <h2 class="mb-4 text-center">Actualizar usuario</h2>
@@ -64,3 +66,5 @@
         }
     }
 </script>
+
+<?php include '../templates/footer.php'; ?>

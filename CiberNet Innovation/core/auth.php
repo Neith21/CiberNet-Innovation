@@ -37,7 +37,7 @@ class Auth
                 $_SESSION["userName"] = $userData['userName'];
                 $_SESSION["RolID"] = $userData['RolID'];
 
-                header("Location: /CiberNet%20Innovation/index.php");
+                header("Location: ./app/views/pages/index.php");
                 exit();
             } else {
                 $error = "Inicio de sesión fallido";
