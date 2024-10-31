@@ -1,5 +1,9 @@
 <?php
 session_start();
+if ($_SESSION['userName'] == "") {
+    header("Location: ../../../index.php");
+    exit();
+}
 
 define('MAX_INACTIVITY', 300);
 
@@ -215,6 +219,7 @@ $_SESSION["LAST_ACTIVITY"] = time();
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="../pages/chart.php"><i class="fa fa-check"></i> Comprar ventas de productos </a></li>
+                            <li><a href="../pages/chartSales.php"><i class="fa fa-check"></i> Productos mas Vendidos </a></li>
                         </ul>
                     </li>
                 </ul>
