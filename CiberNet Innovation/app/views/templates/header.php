@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-define('MAX_INACTIVITY', 3);
+define('MAX_INACTIVITY', 300);
 
 if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > MAX_INACTIVITY)) {
     session_unset();
