@@ -1,4 +1,7 @@
-<?php include '../templates/header.php'; ?>
+<?php
+include '../templates/header.php';
+require_once(dirname(__FILE__) . "/../../../core/authRol.php");
+?>
 
 <div class="container">
     <div class="card mt-5 p-4">
@@ -7,7 +10,7 @@
             <a href="?pages=rol&action=create" class="btn btn-success">Crear Rol</a>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped table-bordered">
+            <table id="genericTable" class="table table-striped table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">ID</th>

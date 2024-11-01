@@ -1,4 +1,7 @@
-<?php include '../templates/header.php'; ?>
+<?php
+include '../templates/header.php';
+require_once(dirname(__FILE__) . "/../../../core/authRol.php");
+?>
 
 <div class="container mt-5">
     <div class="card p-4 shadow">

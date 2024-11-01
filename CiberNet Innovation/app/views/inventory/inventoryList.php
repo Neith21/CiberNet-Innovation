@@ -7,13 +7,13 @@
             <a href="?pages=inventory&action=create" class="btn btn-success">Crear registro</a>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped table-bordered">
+            <table id="exportTable" class="table table-striped table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Stock</th>
-                        <th scope="col">Ultimo movimiento</th>
+                        <th scope="col">Último movimiento</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Usuario</th>
                         <th scope="col" class="text-center">Opciones</th>

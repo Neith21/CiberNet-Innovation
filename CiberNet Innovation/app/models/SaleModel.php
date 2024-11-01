@@ -11,12 +11,6 @@ class SaleModel
     public $UserID;
     public $userName; //Para el nombre del usuario
 
-    public $ProductID;
-    public $productName;
-    public $productPrice;
-    public $stock;
-
-
     public function __construct($db)
     {
         $this->conn = $db;
@@ -42,14 +36,6 @@ class SaleModel
         }
     }
 
-    /* public function getUsers()
-    {
-        $query = "CALL sp_SelectUsers();";
-        $result = $this->conn->prepare($query);
-        $result->execute();
-        return $result;
-    } */
-
     public function getProducts()
     {
         $query = "CALL sp_SelectProducts4Sale();";
@@ -58,13 +44,13 @@ class SaleModel
         return $result;
     }
 
-    /* public function getSales()
+    public function getSales()
     {
         $query = "CALL sp_SelectSales();";
         $result = $this->conn->prepare($query);
         $result->execute();
         return $result;
-    } */
+    }
 
     public function getSaleID()
     {
@@ -76,5 +62,35 @@ class SaleModel
             return $row['SaleID'];
         }
         return null;
+    }
+
+    public function getSaleByID()
+    {
+        $query = "CALL sp_SelectSaleById(:SaleID);";
+        $result = $this->conn->prepare($query);
+
+
+        $result->bindParam("SaleID", $this->SaleID);
+
+        $result->execute();
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+
+        $this->SaleID = $row["SaleID"];
+        $this->saleDate = $row["saleDate"];
+        $this->customerName = $row["customerName"];
+        $this->saleTotal = $row["saleTotal"];
+        $this->UserID = $row["UserID"];
+    }
+
+    public function delete()
+    {
+        $query = "CALL sp_DeleteSale(:SaleID);";
+        $result = $this->conn->prepare($query);
+        $result->bindParam("SaleID", $this->SaleID);
+        if ($result->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

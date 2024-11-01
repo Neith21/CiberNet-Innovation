@@ -21,34 +21,50 @@ class SaleController
 
     public function index()
     {
+        $result = $this->sale->getSales();
+        $sales = $result->fetchAll(PDO::FETCH_ASSOC);
+        include(dirname(__FILE__) . '/../views/sale/saleList.php');
+    }
+
+    public function getProducts()
+    {
         $productsResult = $this->sale->getProducts();
         $products = $productsResult->fetchAll(PDO::FETCH_ASSOC);
-        
+
         return $products;
     }
 
-    public function create() {
-        $data = json_decode(file_get_contents("php://input"), true);
-    
-        $this->sale->customerName = $data['customerName'];
-        $this->sale->saleTotal = $data['saleTotal'];
-        $this->sale->UserID = $_SESSION["UserID"];
-        $this->sale->create();
-    
-        $SaleID = $this->sale->getSaleID();
-    
-        foreach ($data['saleDetails'] as $detail) {
-            $this->saleDetail->ProductID = $detail['productId'];
-            $this->saleDetail->saleDetailQty = $detail['qty'];
-            $this->saleDetail->unitPrice = $detail['unitPrice'];
-            $this->saleDetail->SaleID = $SaleID;
-            
-            if (!$this->saleDetail->Create()) {
-                echo json_encode(['success' => false, 'message' => 'Error al crear el detalle de la venta.']);
-                return;
-            }
+    public function getSaleDetails($id)
+    {
+        $SaleID = $id;
+        $saleDetailsResult = $this->saleDetail->getSaleDetails($SaleID);
+
+        if ($saleDetailsResult) {
+            $saleDetails = $saleDetailsResult->fetchAll(PDO::FETCH_ASSOC);
+            include(dirname(__FILE__) . '/../views/sale/saleDetailList.php');
+        } else {
+            echo "No se encontraron detalles para esta venta.";
         }
-    
-        echo json_encode(['success' => true]);
+    }
+
+
+    public function delete($id)
+    {
+        $this->sale->SaleID = $id;
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['confirmDelete'])) {
+                $this->sale->delete();
+                header("Location: sale.php");
+            } else {
+                header("Location: sale.php");
+            }
+            exit();
+        }
+
+        $this->sale->getSaleByID();
+        $sale = $this->sale;
+
+        include(dirname(__FILE__) . '/../views/sale/saleDelete.php');
     }
 }

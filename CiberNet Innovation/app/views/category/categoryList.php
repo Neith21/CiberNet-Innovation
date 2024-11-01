@@ -7,7 +7,7 @@
             <a href="?pages=category&action=create" class="btn btn-success">Crear Categoría</a>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped table-bordered">
+            <table id="genericTable" class="table table-striped table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">ID</th>

@@ -10,13 +10,13 @@ define('MAX_INACTIVITY', 300);
 if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > MAX_INACTIVITY)) {
     session_unset();
     session_destroy();
-    header("Location: ../../../index.php"); 
+    header("Location: ../../../index.php");
     exit();
 }
 
 $_SESSION["LAST_ACTIVITY"] = time();
 ?>
-
+<?php ob_start() ?>
 <!DOCTYPE html>
 <html>
 
@@ -38,15 +38,20 @@ $_SESSION["LAST_ACTIVITY"] = time();
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../../../public/dist/css/skins/_all-skins.min.css">
 
+    <!-- Incluir CSS de DataTables y Buttons -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <script>
-        const INACTIVITY_TIMEOUT = 5 * 60 * 1000; 
-        const ALERT_TIMEOUT = 4 * 60 * 1000; 
+    <script>
+        const INACTIVITY_TIMEOUT = 5 * 60 * 1000;
+        const ALERT_TIMEOUT = 4 * 60 * 1000;
 
         let inactivityTimer;
         let alertTimeout;
@@ -67,6 +72,7 @@ $_SESSION["LAST_ACTIVITY"] = time();
                 window.location.href = './core/exit.php';
             }, INACTIVITY_TIMEOUT);
         }
+
         function extendUserSession() {
             fetch('./core/extend_session.php')
                 .then(response => response.json())
@@ -190,7 +196,17 @@ $_SESSION["LAST_ACTIVITY"] = time();
                             </span>
                         </a>
                         <ul class="treeview-menu">
+                            <li><a href="../pages/sale.php"><i class="fa fa-table"></i> Generar venta</a></li>
+                            <li><a href="../pages/inventory.php"><i class="fa fa-table"></i> Inventario</a></li>
+                            <li><a href="../pages/product.php"><i class="fa fa-table"></i> Productos </a></li>
+                            <li><a href="../pages/category.php"><i class="fa fa-table"></i> Categorías </a></li>
+                            <li><a href="../pages/supplier.php"><i class="fa fa-table"></i> Proveedores </a></li>
                             <?php if ($_SESSION["RolID"] == 1): ?>
+                                <li>
+                                    <a href="<?php echo $_SESSION["RolID"] != 1 ? '404' : '../sale/index.php'; ?>">
+                                        <i class="fa fa-table"></i> Ventas
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="<?php echo $_SESSION["RolID"] != 1 ? '404' : '../pages/user.php'; ?>">
                                         <i class="fa fa-table"></i> Usuarios
@@ -202,11 +218,6 @@ $_SESSION["LAST_ACTIVITY"] = time();
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <li><a href="../pages/inventory.php"><i class="fa fa-table"></i> Inventario</a></li>
-                            <li><a href="../pages/sale.php"><i class="fa fa-table"></i> Generar venta</a></li>
-                            <li><a href="../pages/product.php"><i class="fa fa-table"></i> Productos </a></li>
-                            <li><a href="../pages/category.php"><i class="fa fa-table"></i> Categorías </a></li>
-                            <li><a href="../pages/supplier.php"><i class="fa fa-table"></i> Proveedores </a></li>
                         </ul>
                     </li>
                     <li class="header">HERRAMIENTAS DE ANÁLISIS</li>

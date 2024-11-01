@@ -39,11 +39,12 @@ class SaleDetailModel
         }
     }
 
-    /* public function getSaleDetails()
+    public function getSaleDetails($id)
     {
         $query = "CALL sp_SelectSaleDetails(:SaleID);";
         $result = $this->conn->prepare($query);
+        $result->bindParam(":SaleID", $id);
         $result->execute();
         return $result;
-    } */
+    }
 }

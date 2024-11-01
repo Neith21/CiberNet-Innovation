@@ -59,7 +59,7 @@ CREATE TABLE `inventory` (
   KEY `ProductID` (`ProductID`),
   CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
   CONSTRAINT `inventory_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `inventory` (
 
 LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
-INSERT INTO `inventory` VALUES (1,17,'Entrada','2024-10-30 03:50:39',1,1),(4,100,'Entrada','2024-10-30 18:15:18',2,2),(5,73,'Entrada','2024-10-30 18:15:18',1,3),(6,30,'Entrada','2024-10-30 18:15:18',2,4),(7,200,'Entrada','2024-10-30 18:15:18',2,5),(8,10,'Salida','2024-10-30 18:15:18',1,1),(9,15,'Salida','2024-10-30 18:15:18',2,2),(10,20,'Salida','2024-10-30 18:15:18',2,3),(11,5,'Salida','2024-10-30 18:15:18',1,4),(12,50,'Salida','2024-10-30 18:15:18',1,5),(13,98,'Entrada','2024-10-30 18:31:52',2,2),(14,1,'Salida','2024-10-30 19:10:56',2,1),(15,2,'Salida','2024-10-30 19:12:23',2,2),(16,2,'Salida','2024-10-30 19:32:41',1,3),(17,1,'Salida','2024-10-30 19:36:08',1,1),(18,1,'Salida','2024-10-30 19:36:08',1,1);
+INSERT INTO `inventory` VALUES (1,16,'Entrada','2024-10-30 03:50:39',1,1),(4,100,'Entrada','2024-10-30 18:15:18',2,2),(5,73,'Entrada','2024-10-30 18:15:18',1,3),(6,30,'Entrada','2024-10-30 18:15:18',2,4),(7,200,'Entrada','2024-10-30 18:15:18',2,5),(8,10,'Salida','2024-10-30 18:15:18',1,1),(9,15,'Salida','2024-10-30 18:15:18',2,2),(10,20,'Salida','2024-10-30 18:15:18',2,3),(11,5,'Salida','2024-10-30 18:15:18',1,4),(12,50,'Salida','2024-10-30 18:15:18',1,5),(13,96,'Entrada','2024-10-30 18:31:52',2,2),(14,1,'Salida','2024-10-30 19:10:56',2,1),(15,2,'Salida','2024-10-30 19:12:23',2,2),(16,2,'Salida','2024-10-30 19:32:41',1,3),(17,1,'Salida','2024-10-30 19:36:08',1,1),(18,1,'Salida','2024-10-30 19:36:08',1,1),(19,1,'Salida','2024-11-01 01:10:10',1,1),(20,1,'Salida','2024-11-01 01:10:10',1,2),(21,1,'Salida','2024-11-01 01:24:29',1,2);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +146,7 @@ CREATE TABLE `sale` (
   PRIMARY KEY (`SaleID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `sale_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +155,7 @@ CREATE TABLE `sale` (
 
 LOCK TABLES `sale` WRITE;
 /*!40000 ALTER TABLE `sale` DISABLE KEYS */;
-INSERT INTO `sale` VALUES (1,'2024-10-30 18:54:58','Ariel',1549.98,1),(2,'2024-10-30 18:55:27','',699.99,1),(3,'2024-10-30 18:56:21','',30.00,2),(4,'2024-10-30 19:10:56','Juana',699.99,2),(5,'2024-10-30 19:12:23','',300.00,2),(6,'2024-10-30 19:32:41','11',41.00,1),(7,'2024-10-30 19:36:08','awas',1399.98,1);
+INSERT INTO `sale` VALUES (1,'2024-10-30 18:54:58','Ariel',1549.98,1),(2,'2024-10-30 18:55:27','',699.99,1),(3,'2024-10-30 18:56:21','',30.00,2),(4,'2024-10-30 19:10:56','Juana',699.99,2),(5,'2024-10-30 19:12:23','',300.00,2),(6,'2024-10-30 19:32:41','11',41.00,1),(7,'2024-10-30 19:36:08','awas',1399.98,1),(9,'2024-11-01 01:24:29','',150.00,1);
 /*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -176,9 +176,9 @@ CREATE TABLE `saledetail` (
   PRIMARY KEY (`SaleDetailID`),
   KEY `SaleID` (`SaleID`),
   KEY `ProductID` (`ProductID`),
-  CONSTRAINT `saledetail_ibfk_1` FOREIGN KEY (`SaleID`) REFERENCES `sale` (`SaleID`),
+  CONSTRAINT `saledetail_ibfk_1` FOREIGN KEY (`SaleID`) REFERENCES `sale` (`SaleID`) ON DELETE CASCADE,
   CONSTRAINT `saledetail_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +187,7 @@ CREATE TABLE `saledetail` (
 
 LOCK TABLES `saledetail` WRITE;
 /*!40000 ALTER TABLE `saledetail` DISABLE KEYS */;
-INSERT INTO `saledetail` (`SaleDetailID`, `saleDetailQty`, `unitPrice`, `SaleID`, `ProductID`) VALUES (1,1,150.00,1,2),(2,2,699.99,1,1),(3,1,699.99,2,1),(4,2,15.00,3,4),(5,1,699.99,4,1),(6,2,150.00,5,2),(7,2,20.50,6,3),(8,1,699.99,7,1),(9,1,699.99,7,1);
+INSERT INTO `saledetail` (`SaleDetailID`, `saleDetailQty`, `unitPrice`, `SaleID`, `ProductID`) VALUES (1,1,150.00,1,2),(2,2,699.99,1,1),(3,1,699.99,2,1),(4,2,15.00,3,4),(5,1,699.99,4,1),(6,2,150.00,5,2),(7,2,20.50,6,3),(8,1,699.99,7,1),(9,1,699.99,7,1),(12,1,150.00,9,2);
 /*!40000 ALTER TABLE `saledetail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -585,6 +585,27 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_DeleteSale` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeleteSale`(
+	IN sID INT
+)
+BEGIN
+    DELETE FROM Sale WHERE SaleID = sID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_DeleteSupplier` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -834,6 +855,31 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectProductByIdSale` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectProductByIdSale`(
+	IN pID INT
+)
+BEGIN
+	SELECT p.ProductID, p.productName, p.productPrice, i.inventoryQty AS stock 
+    FROM Product p
+    INNER JOIN Inventory i ON p.ProductID = i.ProductID
+    WHERE p.ProductID = pID
+    LIMIT 1;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_SelectProducts` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -923,6 +969,53 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectSaleById` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectSaleById`(
+	IN sID INT
+)
+BEGIN
+    SELECT SaleID, saleDate, customerName, saleTotal, UserID
+    FROM Sale
+    WHERE SaleID = sID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectSaleDetails` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectSaleDetails`(
+	IN sID INT
+)
+BEGIN
+    SELECT SaleDetailID, saleDetailQty, unitPrice, subtotal, SaleID, productName
+    FROM SaleDetail sd
+    INNER JOIN Product p ON sd.ProductID = p.ProductID
+    WHERE SaleID = sID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_SelectSaleID` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -936,6 +1029,25 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectSaleID`()
 BEGIN
 	SELECT MAX(SaleID) AS SaleID FROM Sale;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SelectSales` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SelectSales`()
+BEGIN
+	SELECT SaleID, saleDate, customerName, saleTotal, u.userName FROM Sale s INNER JOIN User u ON s.UserID = u.UserID;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1201,4 +1313,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-31 18:58:46
+-- Dump completed on 2024-10-31 21:41:25

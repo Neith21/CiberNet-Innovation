@@ -7,15 +7,15 @@
             <a href="?pages=product&action=create" class="btn btn-success">Crear registro</a>
         </div>
         <div class="table-responsive">
-            <table class="table table-striped table-bordered">
+            <table id="exportTable" class="table table-striped table-bordered">
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">ID Producto</th>
                         <th scope="col">Nombre Producto</th>
-                        <th scope="col">Informacion Producto</th>
+                        <th scope="col">Información Producto</th>
                         <th scope="col">Precio Producto</th>
-                        <th scope="col">Presentacion Producto</th>
-                        <th scope="col">Categoria Producto</th>
+                        <th scope="col">Presentación Producto</th>
+                        <th scope="col">Categoría Producto</th>
                         <th scope="col">Proveedor Producto</th>
                         <th scope="col" class="text-center">Opciones</th>
                     </tr>

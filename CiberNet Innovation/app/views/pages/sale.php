@@ -4,11 +4,11 @@
 require_once __DIR__ . '/../../../app/controllers/SaleController.php';
 
 $controller = new SaleController();
-$products = $controller->index();
+$products = $controller->getProducts();
 ?>
 
 <div class="container mt-4">
-    <form method="POST" id="saleForm" action="saleSave.php">
+    <form method="POST" id="saleForm" action="saleSave.php" onsubmit="return validateSale()">
         <div class="row">
             <!-- Datos del Cliente -->
             <div class="col-md-5">
@@ -32,16 +32,10 @@ $products = $controller->index();
                     <div class="card-body">
                         <div class="form-group">
                             <label for="productSelect">Producto</label>
-                            <select id="productSelect" class="form-control" onchange="loadProductData()">
-                                <option value="">Selecciona un producto</option>
-                                <?php foreach ($products as $product) : ?>
-                                    <option value="<?php echo htmlspecialchars(json_encode([$product['ProductID'], $product['productPrice'], $product['stock']])); ?>">
-                                        <?php echo $product['productName']; ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <input type="text" id="productSelect" class="form-control" placeholder="Escribe para buscar..." onfocus="showProductList()" oninput="filterProducts()">
+                            <div id="productList" class="list-group"></div>
                         </div>
-                        <input type="hidden" name="productID" id="productID" class="form-control">
+                        <input type="hidden" name="productID" id="productID">
                         <div class="form-group">
                             <label for="productName">Descripción</label>
                             <input type="text" name="productName" id="productName" class="form-control" placeholder="Producto" readonly>
@@ -52,7 +46,7 @@ $products = $controller->index();
                         </div>
                         <div class="form-group">
                             <label for="saleDetailQty">Cantidad</label>
-                            <input type="number" name="saleDetailQty" id="saleDetailQty" class="form-control" placeholder="0">
+                            <input type="number" name="saleDetailQty" id="saleDetailQty" class="form-control" placeholder="0" value="1">
                         </div>
                         <div class="form-group">
                             <label for="productStock">Stock</label>
@@ -84,8 +78,10 @@ $products = $controller->index();
                             </tbody>
                         </table>
                         <div class="d-flex justify-content-between">
-                            <button type="submit" class="btn btn-success" onclick="prepareSaleDetails()">Generar Venta</button>
+                            <button type="submit" class="btn btn-success">Generar Venta</button>
                             <button type="button" class="btn btn-danger" onclick="clearAll()">Cancelar</button>
+                            <input type="hidden" name="total" id="totalHidden">
+                            <input type="hidden" name="saleDetails" id="saleDetailsHidden">
                             <h4 class="text-right">$ <span id="total">0.00</span></h4>
                         </div>
                     </div>
@@ -96,8 +92,8 @@ $products = $controller->index();
 </div>
 
 <script>
-    // Almacena los detalles de la venta
     let saleDetails = [];
+    let products = <?php echo json_encode($products); ?>; // Lista de productos para autocompletar
 
     function addProductToTable() {
         const productId = document.getElementById('productID').value;
@@ -106,7 +102,11 @@ $products = $controller->index();
         const productQty = parseInt(document.getElementById('saleDetailQty').value);
         const stock = parseInt(document.getElementById('stock').value);
 
-        // Verificar que la cantidad no sea mayor al stock disponible
+        if (saleDetails.some(detail => detail.productId === productId)) {
+            alert("El producto ya ha sido agregado.");
+            return;
+        }
+
         if (productQty > stock) {
             alert(`La cantidad ingresada (${productQty}) supera el stock disponible (${stock}).`);
             return;
@@ -122,19 +122,18 @@ $products = $controller->index();
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${table.querySelectorAll("tr").length + 1}</td>
-            <td>${productId}</td>
-            <td>${productName}</td>
-            <td>${productPrice.toFixed(2)}</td>
-            <td>${productQty}</td>
-            <td>${subtotal.toFixed(2)}</td>
-            <td><button class="btn btn-danger" onclick="removeRow(this)">Eliminar</button></td>
-        `;
+        <td>${table.querySelectorAll("tr").length + 1}</td>
+        <td>${productId}</td>
+        <td>${productName}</td>
+        <td>${productPrice.toFixed(2)}</td>
+        <td>${productQty}</td>
+        <td>${subtotal.toFixed(2)}</td>
+        <td><button class="btn btn-danger" onclick="removeRow(this)">Eliminar</button></td>
+    `;
 
         table.appendChild(row);
         updateTotal();
 
-        // Agregar el detalle al array
         saleDetails.push({
             productId,
             productName,
@@ -143,18 +142,15 @@ $products = $controller->index();
             subtotal
         });
 
-        // Limpiar los campos del producto
         clearProductFields();
     }
 
-    function removeRow(button) {
-        const row = button.parentNode.parentNode;
-        const productId = row.cells[1].textContent; // Obtiene el ID del producto para remover del array
 
-        // Eliminar el detalle del array
-        saleDetails = saleDetails.filter(detail => detail.productId !== productId);
-
-        row.parentNode.removeChild(row);
+    function updateRowSubtotal(input) {
+        const row = input.parentNode.parentNode;
+        const productPrice = parseFloat(row.cells[3].textContent);
+        const qty = parseInt(input.value);
+        row.cells[5].textContent = (productPrice * qty).toFixed(2);
         updateTotal();
     }
 
@@ -165,31 +161,25 @@ $products = $controller->index();
             total += subtotal;
         });
         document.getElementById("total").textContent = total.toFixed(2);
+        document.getElementById("totalHidden").value = total.toFixed(2);
     }
 
-    function loadProductData() {
-        const select = document.getElementById('productSelect');
-        const selectedOption = select.options[select.selectedIndex].value;
-
-        if (selectedOption) {
-            const [productId, productPrice, stock] = JSON.parse(selectedOption);
-
-            document.getElementById('productID').value = productId;
-            document.getElementById('productName').value = select.options[select.selectedIndex].text;
-            document.getElementById('productPrice').value = productPrice;
-            document.getElementById('stock').value = stock;
-        } else {
-            clearProductFields();
-        }
+    function removeRow(button) {
+        const row = button.parentNode.parentNode;
+        const productId = row.cells[1].textContent;
+        saleDetails = saleDetails.filter(detail => detail.productId !== productId);
+        row.parentNode.removeChild(row);
+        updateTotal();
     }
 
     function clearProductFields() {
         document.getElementById('productID').value = '';
         document.getElementById('productName').value = '';
         document.getElementById('productPrice').value = '';
-        document.getElementById('saleDetailQty').value = '';
+        document.getElementById('saleDetailQty').value = 1;
         document.getElementById('stock').value = '';
-        document.getElementById('productSelect').selectedIndex = 0;
+        document.getElementById('productSelect').value = '';
+        document.getElementById('productList').innerHTML = '';
     }
 
     function clearAll() {
@@ -197,24 +187,65 @@ $products = $controller->index();
         clearProductFields();
         document.querySelector("#detailsTable tbody").innerHTML = '';
         document.getElementById("total").textContent = "0.00";
-        saleDetails = []; // Limpiar detalles de venta
+        saleDetails = [];
     }
 
-    function prepareSaleDetails() {
-    const saleDetailsInput = document.createElement('input');
-    saleDetailsInput.type = 'hidden';
-    saleDetailsInput.name = 'saleDetails'; // Nombre del campo para recibir en PHP
-    saleDetailsInput.value = JSON.stringify(saleDetails); // Convertir a JSON para enviarlo
+    function filterProducts() {
+        const input = document.getElementById('productSelect').value.toLowerCase();
+        const productList = document.getElementById('productList');
+        productList.innerHTML = '';
 
-    const totalInput = document.createElement('input');
-    totalInput.type = 'hidden';
-    totalInput.name = 'total'; // Agregar el total
-    totalInput.value = document.getElementById("total").textContent; // Obtener el total mostrado en la interfaz
+        products.forEach(product => {
+            if (product.productName.toLowerCase().includes(input)) {
+                const item = document.createElement('div');
+                item.classList.add('list-group-item');
+                item.textContent = product.productName;
+                item.onclick = () => selectProduct(product);
+                productList.appendChild(item);
+            }
+        });
 
-    document.getElementById('saleForm').appendChild(saleDetailsInput);
-    document.getElementById('saleForm').appendChild(totalInput);
+        // Ocultar la lista si no hay entrada en el campo de búsqueda
+        if (input === '') {
+            productList.innerHTML = '';
+        }
+    }
+
+    function showProductList() {
+        const productList = document.getElementById('productList');
+        productList.innerHTML = '';
+
+        products.forEach(product => {
+            const item = document.createElement('div');
+            item.classList.add('list-group-item');
+            item.textContent = product.productName;
+            item.onclick = () => selectProduct(product);
+            productList.appendChild(item);
+        });
+    }
+
+    function selectProduct(product) {
+        document.getElementById('productID').value = product.ProductID;
+        document.getElementById('productName').value = product.productName;
+        document.getElementById('productPrice').value = product.productPrice;
+        document.getElementById('stock').value = product.stock;
+        document.getElementById('saleDetailQty').value = 1;
+        document.getElementById('productSelect').value = product.productName;
+        document.getElementById('productList').innerHTML = '';
+    }
+
+    function validateSale() {
+    if (saleDetails.length === 0) {
+        alert("No puedes generar una venta sin productos.");
+        return false;
+    }
+
+    // Convierte saleDetails a JSON y almacénalo en el campo oculto
+    document.getElementById("saleDetailsHidden").value = JSON.stringify(saleDetails);
+
+    // Pregunta al usuario si realmente quiere generar la venta
+    return confirm("¿Estás seguro de que deseas generar esta venta?");
 }
-
 </script>
 
 <?php include '../templates/footer.php'; ?>
