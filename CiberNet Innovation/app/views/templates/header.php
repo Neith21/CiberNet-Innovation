@@ -220,6 +220,7 @@ $_SESSION["LAST_ACTIVITY"] = time();
                         <ul class="treeview-menu">
                             <li><a href="../pages/chart.php"><i class="fa fa-check"></i> Comprar ventas de productos </a></li>
                             <li><a href="../pages/chartSales.php"><i class="fa fa-check"></i> Productos mas Vendidos </a></li>
+                            <li><a href="../pages/chartInventory.php"><i class="fa fa-check"></i> Movimientos de Inventario </a></li>
                         </ul>
                     </li>
                 </ul>
