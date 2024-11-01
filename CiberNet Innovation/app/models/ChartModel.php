@@ -9,15 +9,7 @@ class ChartModel {
     }
 
     public function getSalesDataForComparison($PID_1, $PID_2) {
-        $query = "
-            SELECT product.productName, SUM(saledetail.saleDetailQty) as totalSales
-            FROM saledetail
-            JOIN product ON product.ProductID = saledetail.ProductID
-            JOIN sale ON sale.SaleID = saledetail.SaleID
-            WHERE saledetail.ProductID IN (:PID_1, :PID_2)
-              AND sale.saleDate >= DATE_SUB(CURRENT_DATE, INTERVAL 3 MONTH)
-            GROUP BY product.productName
-        ";
+        $query = "CALL sp_GraphCompareSalesLast3Months(:PID_1, :PID_2)";
         $result = $this->conn->prepare($query);
         $result->bindParam(':PID_1', $PID_1, PDO::PARAM_INT);
         $result->bindParam(':PID_2', $PID_2, PDO::PARAM_INT);

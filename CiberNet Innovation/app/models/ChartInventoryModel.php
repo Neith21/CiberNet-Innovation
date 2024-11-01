@@ -9,15 +9,7 @@ class ChartInventoryModel {
     }
 
     public function getInventoryDataByDateRange($startDate, $endDate) {
-        $query = "
-            SELECT 
-                product.productName, 
-                SUM(CASE WHEN inventory.typeMovement = 'Entrada' THEN inventory.inventoryQty ELSE -inventory.inventoryQty END) as netMovement
-            FROM inventory
-            JOIN product ON product.ProductID = inventory.ProductID
-            WHERE inventory.inventoryDate BETWEEN :startDate AND :endDate
-            GROUP BY product.productName
-        ";
+        $query = "CALL sp_GraphProductsMovement(:startDate, :endDate);";
         
         $result = $this->conn->prepare($query);
         $result->bindParam(':startDate', $startDate);
@@ -27,7 +19,6 @@ class ChartInventoryModel {
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Método para obtener la lista de productos
     public function getProducts() {
         $query = "SELECT ProductID, productName FROM product";
         $result = $this->conn->query($query);
